@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MenuItem>
+@{
+    ViewData["Title"] = "_ThumbnailMenuItem";
+
+}
+
+@if(Model.Count() > 0) { 
+
+    @foreach (var item in Model)
+    {
+    <div class="col-sm-12 col-md-4">
+        <img src="@item.Image" height="100px" width="auto"/>
+    </div>
+    <div class="col-sm-12 col-md-8">
+        <h4 class="d-flex justify-content-between"><span>@Html.DisplayFor(m => item.Name)</span><span class="text-success">@Html.DisplayFor(m=>item.Price)</span></h4>
+        <br />  
+        <p>@Html.DisplayFor(m=>item.Description)</p>
+            
+        
+    </div>
+    }
+
+}

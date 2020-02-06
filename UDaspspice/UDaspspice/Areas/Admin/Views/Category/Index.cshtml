@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="jumbotron">
+    <div class="d-flex justify-content-between">        
+        <h3 class="display-4 text-info">Categories</h3>
+        <partial name="_AddButton" />
+    </div>
+    @if(Model.Count() > 0)
+        {
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr >
+                    <th style="width:85%">@Html.DisplayNameFor(m => m.Name)</th>
+                    <th>Manage</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(k=> item.Name)
+                    </td>
+                    <partial name="~/Views/Shared/_CategoryManageIcons.cshtml" model="item.Id"/>
+                </tr>
+            }
+    
+        </table>
+    }
+    else
+    {
+        <p class="lead">
+            No categories...
+        </p>
+    }
+</div>
+
+

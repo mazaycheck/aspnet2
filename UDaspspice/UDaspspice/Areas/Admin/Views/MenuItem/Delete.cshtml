@@ -1,0 +1,93 @@
+﻿@model UDaspspice.Models.ViewModels.MenuViewModel
+@using UDaspspice.Extensions
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="DeleteConfirm" asp-route-id="@Model.MenuItem.Id" method="post">
+                <input type="hidden" asp-for="@Model.MenuItem.Id" />
+                <div class="form-group">
+                    <label asp-for="@Model.MenuItem.Name" class="lead"></label>
+                    <input disabled asp-for="@Model.MenuItem.Name" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.MenuItem.Description" class="lead"></label>
+                    <textarea disabled id="textareaMenuCreate" asp-for="@Model.MenuItem.Description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.MenuItem.Price" class="lead"></label>
+                    <input disabled asp-for="@Model.MenuItem.Price" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.MenuItem.Espice" class="lead"></label>
+                    <select disabled asp-for="@Model.MenuItem.Espice" asp-items="Html.GetEnumSelectList<MenuItem.Spicyness>()" class="form-control"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.MenuItem.CategoryId" class="lead"></label>
+                    <select disabled asp-for="@Model.MenuItem.CategoryId" asp-items="@Model.CategoryEnumerable.ToSelectListItems(Model.MenuItem.CategoryId)" class="form-control" id="selectcategories"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.MenuItem.SubCategoryId" class="lead"></label>
+                    <select disabled asp-for="@Model.MenuItem.SubCategoryId" asp-items='@(new SelectList(string.Empty,"Id", "Name"))' class="form-control" id="selectsubcategories"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.MenuItem.Image" class="lead"></label>
+                    <input disabled type="file" name="files" class="form-control-file" />
+                </div>
+
+                <br />
+
+                <input type="submit" name="name" value="Delete" class="btn btn-danger" />
+                <a asp-action="Index" class="btn btn-warning">Home</a>
+
+            </form>
+        </div>
+        <div class="col-md-4">
+            <img src="@Model.MenuItem.Image" alt="Alternate Text" width="100%" class="img-fluid img-thumbnail" />
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+    tinymce.init({
+        selector: '#textareaMenuCreate',
+        readonly: 1,
+    });
+
+    function getSubCategoriesOptions()
+    {
+
+        var e = document.getElementById("selectcategories");
+        var categoryId = e.options[e.selectedIndex].value;
+
+        var url = "/Admin/SubCategory/GetSubCategoryList/" + categoryId;
+
+        $.getJSON(url, function (data) {
+            var selected;
+            var items = '';
+            $.each(data, function (key, sub) {
+                selected = @Model.MenuItem.SubCategoryId == sub.value ? "selected" : "";
+                items += `<option value='${sub.value}' + ${selected} >${sub.text}</option>`;
+            });
+            $("#selectsubcategories").html(items);
+        });
+    };
+
+    $(document).ready(function () { getSubCategoriesOptions();});
+    $("#selectcategories").change(function () { getSubCategoriesOptions(); });
+
+    </script>
+}

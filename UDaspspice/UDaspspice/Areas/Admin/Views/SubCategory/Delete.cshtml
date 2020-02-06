@@ -1,0 +1,73 @@
+﻿@model UDaspspice.Models.ViewModels.CategoryAndSubCategoryViewModel
+@using UDaspspice.Extensions
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <div class="row">
+
+        <div class="col-md-6 border-right">
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="@Model.Subcategory.CategoryId" />
+                <partial name="_StatusMessage" model="@Model.Message" />
+                <h3 class="text-info">Create New Sub-category</h3>
+                <div class="form-group row">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-lg-8">
+                        <label asp-for="@Model.Subcategory.CategoryId" class="lead"></label>
+                        <label asp-for="@Model.Subcategory.Name" class="lead"></label>
+
+                    </div>
+                    <div class="col-lg-8">
+                        <select disabled id="selectedCategoryId" asp-items="@Model.CategoryList.ToSelectListItems(Model.Subcategory.CategoryId)" asp-for="@Model.Subcategory.CategoryId" class="form-control my-2"></select>
+                        <input asp-for="@Model.Subcategory.Name" class="form-control" />
+                        <span asp-validation-for="@Model.Subcategory.Name" class="text-danger"></span>
+                        <div class="mt-3 d-flex">
+                            <input class="mr-2 btn btn-danger btn-block" type="submit" value="Delete" />
+                            <a asp-action="Index" class="btn btn-warning btn-block m-0 text-white">Home</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <p class="text-center">Existing Categories</p>
+            <div id="dCategoryList"></div>
+        </div>
+    </div>
+
+    @section scripts{
+        @{ { await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }
+
+        <script>
+        function updateSubcategoryList()
+        {
+            let i;
+            var categoryId = document.getElementById("selectedCategoryId").value;
+            $subcategorycontainer = $("#dCategoryList");
+
+
+
+            $.ajax({
+                url: '/Admin/SubCategory/GetSubCategoryList/' + categoryId,
+                type: "GET",
+                dataType: "text",
+                success: function (data) {
+                    results = JSON.parse(data);
+                    $subcategorycontainer.html('');
+                    $subcategorycontainer.append(" <ul class='list-group'> ");
+                    for (i in results) {
+
+                        $subcategorycontainer.append(` <li class='list-group-item my-1'> ${results[i].text} </li> `);
+                    }
+                    $subcategorycontainer.append(" </ul> ");
+                }
+            });
+        }
+        $(document).ready(function () { updateSubcategoryList();  });
+        $("#selectedCategoryId").on("change", function () { updateSubcategoryList(); });
+        </script>
+
+    }

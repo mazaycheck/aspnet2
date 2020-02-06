@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-UDaspspice-8720650F-DE61-438F-8ABD-408546D14492</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200111150132_two.cs" />
+    <Compile Remove="Migrations\20200111150132_two.Designer.cs" />
+    <Compile Remove="Migrations\20200111150214_two.cs" />
+    <Compile Remove="Migrations\20200111150214_two.Designer.cs" />
+    <Compile Remove="Migrations\20200111150331_two.cs" />
+    <Compile Remove="Migrations\20200111150331_two.Designer.cs" />
+    <Compile Remove="Migrations\20200111150546_two.cs" />
+    <Compile Remove="Migrations\20200111150546_two.Designer.cs" />
+    <Compile Remove="Migrations\20200111162914_two-spicy.cs" />
+    <Compile Remove="Migrations\20200111162914_two-spicy.Designer.cs" />
+    <Compile Remove="Migrations\20200111163049_two.cs" />
+    <Compile Remove="Migrations\20200111163049_two.Designer.cs" />
+    <Compile Remove="Migrations\20200111163350_two.cs" />
+    <Compile Remove="Migrations\20200111163350_two.Designer.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+</Project>

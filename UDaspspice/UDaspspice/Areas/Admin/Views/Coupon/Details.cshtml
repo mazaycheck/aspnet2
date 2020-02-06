@@ -1,0 +1,60 @@
+﻿@model UDaspspice.Models.Coupon
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>Add new Coupon : </h2>
+    <div class="row">
+        <form asp-action="Create" method="post" class="col-md-8">
+
+            <div class="form-group my-2">
+                <label asp-for="@Model.Name" class="col-form-label"></label>
+                <input disabled asp-for="@Model.Name" class="form-control" />
+            </div>
+
+            <div class="form-group my-2">
+                <label asp-for="@Model.Type" class="col-form-label"></label>
+                <select disabled asp-for="@Model.Type" asp-items="@Html.GetEnumSelectList<UDaspspice.Models.Coupon.Etype>()" class="form-control"></select>
+            </div>
+
+            <div class="form-group my-2">
+                <label asp-for="@Model.Amount" class="col-form-label"></label>
+                <input disabled asp-for="@Model.Amount" class="form-control" />
+            </div>
+
+            <div class="form-group my-2">
+                <label asp-for="@Model.MinimumSum" class="col-form-label"></label>
+                <input disabled asp-for="@Model.MinimumSum" class="form-control" />
+            </div>
+
+            <div class="form-group my-2">
+                <label asp-for="@Model.IsActive" class="col-form-label"></label>
+                <input disabled asp-for="@Model.IsActive" class="form-control" style="width:40px" />
+            </div>
+
+            <div class="form-group my-2">
+                <label asp-for="@Model.Image" class="col-form-label"></label>
+                <input disabled type="file" multiple name="files" class="form-control-file" />
+            </div>
+
+
+            <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-primary mx-2">Edit</a>
+            <a asp-action="Index" class="btn btn-warning">Home</a>
+
+        </form>
+        <div class="col-md-4">
+            @if (Model.Image != null)
+            {
+
+                var base64 = Convert.ToBase64String(Model.Image);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgSrc" class="img-fluid img-thumbnail" />
+
+            }
+
+        </div>
+    </div>
+</div>
+
